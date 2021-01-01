@@ -1,0 +1,264 @@
+{% extends 'test/base-2/somo.html' %}
+
+{% load static %}
+{% block header %}
+
+        <head>
+            <title>{{ title }}</title>
+            
+                    
+          <meta name="keywords" content="python,useful,function,hack">
+          {% block meta %}
+            <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+            <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+            <meta property="og:url" content="http://www.minekawada.com/wikipedia-python.html" /> <!--③-->
+            <meta property="og:title" content="{{ title }}" /> <!--④-->
+            <meta property="og:description" content="pythonでwikipediaにアクセスして、全知全能になりたい" /> <!--⑤-->
+            <meta property="og:image" content="http://www.minekawada.com/static/Real/wiki/wikipedia_api_link.png" />
+            {% endblock %}
+
+          </head>
+          
+{% endblock %}
+
+
+
+{% block content %}
+          
+  
+        <div id="content">
+
+            <h2>{{ title }}</h2>
+          <br>
+          <br>
+
+          <h4>目次</h4>
+          <ol>
+              <li><a href="#install">インストール方法について</a></li><br>
+
+            <li><a href="#candi">pythonでwikipedia検索結果の候補一覧を出す方法</a></li>
+            <br>
+            <li><a href="#page">pythonでwikipediaのページを出力する方法</a></li>
+            <br>
+            <li><a href="#page_detail">wikipediaのページをさらに詳しく見ていく</a></li>
+
+
+          </ol>
+
+          <br>
+          <br>
+          <hr>
+
+
+          <p id="install">
+
+              <h2>wikipedia apiのインストール方法</h2>
+              <br>
+
+              インストールは以下の一文でOK<br>
+              <pre>
+                  <code>
+pip install wikipedia
+                  </code>
+              </pre>
+わかりやすくていいですね！
+
+
+<br>ここまでできたらサンプルコードを実行してみましょう<br>
+
+          </p>
+          <p>
+
+<br>
+<br>
+<br>
+
+<hr>
+
+<h2 id="candi">pythonでwikipedia検索結果の候補一覧を出す方法</h2>
+<pre>
+    <code>
+import wikipedia
+
+
+tohomas_result = wikipedia.search("トーマス")
+
+print(tohomas_result)
+    </code>
+</pre>
+<br>
+<br>
+結果<br>
+<pre>
+SyntaxError: Non-ASCII character '\xe3' in file sample.py on line 4, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details
+</pre>
+<br>
+なにやらエラーが出てきました。<br>
+原因はsearchの引数の"トーマス"<br>
+ですので先頭に# coding: UTF-8をつけてもう一度実行<br>
+<h3>pythonで日本語を使う際は、先頭に# coding: UTF-8を入力しましょう！</h3>
+
+<pre>
+    <code>
+# coding: UTF-8
+
+import wikipedia
+
+
+tohomas_result = wikipedia.search("トーマス")
+
+print(tohomas_result)
+
+    </code>
+</pre>
+<br>
+結果<br>
+
+
+<pre>
+<code>
+['Perverted Thomas', 'Yuji (actor)', 'List of Thomas & Friends episodes', 'Naomi Watanabe', 'Harukana Receive', 'Brother Tom', 'Dharma & Greg', 'Thomas Kurihara', 'Noguchi', 'Mega Man ZX Advent']
+</code>
+</pre>
+
+<br>
+なんか大量に英語で出力が出てきましたね<br>
+日本語版のwikipediaを使いたいのでwikipedia.set_lang("ja")しましょう<br>
+
+
+<pre>
+<code>
+
+# coding: UTF-8
+
+import wikipedia
+wikipedia.set_lang("ja")
+
+tohomas_result = wikipedia.search("トーマス")
+
+print(tohomas_result)
+
+</code>
+</pre>
+<br>
+
+結果<br>
+<pre>
+['トマス', 'トーマス郡 (ジョージア州)', 'ゲラント・トーマス', 'デビ・トーマス', 'トーマスタウン 新三郷', 'きかんしゃトーマス トーマスのはじめて物語', '機関車トーマス (絵本)', 'トーマス・カーレンベルグ', 'トーマス・パーテイ', 'トーマス・ハドナー (ミサイル駆逐艦)']
+</pre>
+
+どうやら、wikipediaの検索欄で「トーマス」と検索した時の候補一覧が出てくるようですね！<br>
+
+
+<img src="{% static '/Real/wiki/wikipdia_tomas.png' %}">
+</p>
+<p>
+<br>
+<br>
+<br>
+<hr>
+ここでは「機関車トーマス」について調べたいので、候補の「きかんしゃトーマス」をwikipedia.searchの引数に入れましょう<br>
+
+
+
+<h2 id="page">pythonでwikipediaのページを出力する方法</h2>
+
+wikipediaのページを出力する方法はwikipedia.page()の引数にキーワードを入力するだけです<br>
+
+<pre>
+<code>
+# coding: UTF-8
+
+import wikipedia
+wikipedia.set_lang("ja")
+
+tohomas_page_result = wikipedia.page("きかんしゃトーマス")
+
+print(tohomas_page_result)
+</code>
+</pre>
+
+結果<br>
+
+<pre>
+<code>
+    &lt;wikipediaPage 'きかんしゃトーマス'&gt; &lt;/WikipediaPage&gt;
+</code>
+</pre>
+どうやら、WikipediaPageというオブジェクトが生成されるようです<br>
+おそらくですが、このtohomas_page_resultに「きかんしゃトーマス」と入力した時の結果が詰まっているのでしょう<br>
+
+<br>
+<br>
+<br>
+<hr>
+
+
+</p>
+
+
+<p id="page_detail">
+<h2>wikipediaのページをさらに詳しく見ていく</h2>
+
+ではこの<br>
+&lt;wikipediaPage 'きかんしゃトーマス'&gt; &lt;/WikipediaPage&gt;<br>
+にどんなプロパティが詰まっているのか見ていきましょう！<br>
+
+
+<h3>pythonはオブジェクトに対して__dict__を入力すると、そのプロパティ全てが出力されます</h3>
+<br>
+<br>
+コード<br>
+<pre>
+    <code>
+# coding: UTF-8
+
+import wikipedia
+
+wikipedia.set_lang("ja")
+tohomas_page_result = wikipedia.page("きかんしゃトーマス")
+print(tohomas_page_result.__dict__)
+    </code>
+</pre>
+
+結果
+<pre>
+    <code>
+{
+    'title': 'きかんしゃトーマス', 
+    'original_title': 'きかんしゃトーマス', 
+    'pageid': '691439',
+     'url': 'https://ja.wikipedia.org/wiki/%E3%81%8D%E3%81%8B%E3%82%93%E3%81%97%E3%82%83%E3%83%88%E3%83%BC%E3%83%9E%E3%82%B9'
+}
+    </code>
+</pre>
+
+このように、プロパティとその値が全て入っています<br>
+
+<br>
+しかし、これだけだとまだよくわかりませんね...<br>
+大人しくドキュメントを読みますか...<br>
+
+
+<a href="https://pypi.org/project/wikipedia/">wikipedia apiのドキュメントリンク</a>
+
+
+<img src="{% static '/Real/wiki/wikipedia_api_link.png' %}">
+
+
+<br>
+<br>
+<br>
+<hr>
+
+</p>
+
+        </div>
+
+
+  
+  {% endblock %}
+  
+  
+  
+  

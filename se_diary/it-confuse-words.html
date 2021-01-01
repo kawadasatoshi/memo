@@ -1,0 +1,211 @@
+{% extends 'test/base-2/somo.html' %}
+
+{% load static %}
+
+{% block header %}
+
+<head>
+    <title>{{ title }}</title>
+    <meta name="keywords" content="IT業界,単語,紛らわしい">
+        {% block meta %}
+        <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+        <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+        <meta property="og:url" content="http://www.minekawada.com/{{ url }}" /> <!--③-->
+        <meta property="og:title" content="{{ title }}" /> <!--④-->
+        <meta property="og:description" content="{{ title }}" /> <!--⑤-->
+        <meta property="og:image" content="http://www.minekawada.com/static/{{ core_image_url }}" /> <!--⑥-->
+        {% endblock %}
+      </head>
+      
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+  
+
+<div id="content">
+
+2020/2/22 記術
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+前回の内容
+<h3><a href="program-language-oder.html">自分のITライフを振り返りつつ、プログラミング言語の学ぶ順番について考える </a>
+</h3>
+
+<br>
+
+<br>
+
+<br>
+
+
+<p>
+    <a href="#1">
+        0,なぜこの記事を書こうと思ったのか？
+    </a><br>
+
+
+    <a href="#2">
+        1,ハッカー
+    </a><br>
+
+
+
+
+    <a href="#5">
+        2,ロコす,キル
+    </a><br>
+
+
+    <br>
+    <br>
+    <br>
+    <hr>
+</p>
+
+
+
+<p>
+    <h3 id="1">
+        0,なぜこの記事を書こうと思ったのか？
+    </h3>
+
+    　僕が初めて学んだプログラミング言語はC言語<br>
+    そしてC言語に関するあるブログ記事を見たときに見た一言<br>
+    <h3>C言語は低級言語</h3>
+    初めは侮辱と屈辱で最低な記事だと思いましたが、どうやら意味が違うようです<br>
+    <h4>これが先輩との会話だったら、喧嘩になりかねませんでした笑</h4>
+    こう言った勘違いから、職場の空気を悪くすることを未然に防ぎたい<br>
+    <br>
+    そのためには、新卒のエンジニア達にも、ある程度の言葉の理解は必要ですね<br>
+
+    <br>
+    <br>
+    <br>
+    <hr>
+
+</p>
+
+
+
+
+
+
+
+<p>
+    <h2 id="2">
+        ハッカー
+    </h2>
+
+    エンジニアは、メディアが「ハッカー」という言葉を使うと必ずと言っていいほど発狂します<br>
+    エンジニアの中では、ハッカーとは「コンピューター技術にたけた人間をハッカーと呼ぶのです」という意味です<br>
+    ですので以下のように、悪意のあるプログラムを使うという意味でハッカーというと、エンジニアは自分たちの仕事が勘違いされているとして発狂するのです<br>
+
+    <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">極悪ハッカー<a href="https://twitter.com/hashtag/%E3%81%BE%E3%81%84%E3%81%AB%E3%81%A1%E3%82%AA%E3%83%A1%E3%82%AC%E3%83%9E%E3%83%B3?src=hash&amp;ref_src=twsrc%5Etfw">#まいにちオメガマン</a> <a href="https://t.co/1qdiwBwgn0">pic.twitter.com/1qdiwBwgn0</a></p>&mdash; キン肉パパ (@kin29papa) <a href="https://twitter.com/kin29papa/status/1250922019064963072?ref_src=twsrc%5Etfw">April 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    この方は、「悪意のあるプログラムを使うという意味」でハッカーという言葉を使います<br>
+    自分は気にしませんが、こだわるエンジニアからは叩かれそう...<br>
+
+    <br>
+    <br>
+    <br>
+    
+
+    <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">悪意的な意味でセキュリティシステムをハッキングする者→クラッカー<br><br>善意的(企業側から安全面の試験目的等で依頼される等)にセキュリティをハッキングする者→ハッカー<br>なのね<br><br>今まで2つとも纏めてハッカーて呼んでたわ <a href="https://t.co/aPmTIpfBN5">pic.twitter.com/aPmTIpfBN5</a></p>&mdash; Tokinin(チャンバラ ex-エリンギ064) (@Tokinin_HACDOL) <a href="https://twitter.com/Tokinin_HACDOL/status/1224229824803160064?ref_src=twsrc%5Etfw">February 3, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    こちらが正しい解釈でしょう<br>
+    <h2>コンピューター技術にたけた人間をハッカーと呼ぶのです</h2>
+    <br>
+    <br>
+    <br>
+    逆に、「コンピューター技術を悪用してしまう人間」を<h2>クラッカー</h2>と呼びます
+    <br>
+    <br>
+    <br>
+    <hr>
+
+</p>
+
+
+
+
+
+
+
+<p>
+    <h2 id="5">
+        ロコす、キル
+    </h2>
+
+    <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">あー…。あるある。エンジニアの物騒な表現（笑 <a href="https://t.co/nV1yALvVSe">https://t.co/nV1yALvVSe</a></p>&mdash; wolfish (@wolfish_garou) <a href="https://twitter.com/wolfish_garou/status/1218464368137912321?ref_src=twsrc%5Etfw">January 18, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <br>
+    <br>
+    何も知らないエンジニアの方々には、くれぐれもロコす、キルするなどの表現を使ってはいけません笑<br>
+    <br>
+
+    殺すの元になっているのは、おそらくlinuxコマンドのkillコマンド<br>
+    これはosが実行している作業を中止するコマンド(命令)です<br>
+
+
+    ちなみにこのosが実行している作業のことをプロセスと言います<br>
+    <br>
+    ですので、「このプロセスを殺す」<br>
+    という言葉が聞こえてきたら<br>
+    「osが実行しているこの作業を中断する命令をosに出す」という意味だと思っておいてください<br>
+
+
+<br>
+<br>
+もっというと、そのプロセスには「親」と「子」さらには「兄弟」という概念が出てきます<br>
+osの行う作業からは、さらにそこから別の作業命令が出ることががあります<br>
+<h3>大元の命令を「親プロセス」そこから発生した命令を「子プロセス」という呼び方をします</h3><br>
+<br>
+ですので、「子をロコしても埒が明かないから、親をロコしてしまおう」なんて会話が出てきたりもします<br>
+この場合は、「大元の命令を中止すれば、そこから発生している命令も中止するだろう」という意味です<br>
+
+
+
+
+<br>
+<br>
+<br>
+
+
+<br>
+<br>
+<br>
+
+    IT業界で殺すという意味が出てきたら、十中八九プロセスのことです。ご安心ください笑<br>
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+    <hr>
+
+</p>
+
+    
+</div>
+    
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'test/base-2/somo.html' %}
+
+{% load static %}
+
+{% block header %}
+
+<head>
+    <title>{{ title }}</title>
+    <meta name="keywords" content="プログラミング言語,順番,学ぶ">
+        {% block meta %}
+        <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+        <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+        <meta property="og:url" content="http://www.minekawada.com/{{ url }}" /> <!--③-->
+        <meta property="og:title" content="{{ title }}" /> <!--④-->
+        <meta property="og:description" content="{{ title }}" /> <!--⑤-->
+        <meta property="og:image" content="{{ core_image_url }}" /> <!--⑥-->
+        {% endblock %}
+      </head>
+      
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+  
+
+<div id="content">
+
+
+
+
+
+    <p>
+        <h2>
+            結論：xとyは以下の方法でサイズを設定せよ！
+        </h2>
+        <pre>
+.attr("x", function(d) { return -25;})
+.attr("y", function(d) { return -25;})
+        </pre>
+
+<br>
+<br>
+
+        例)<br>
+        <pre>
+var images = nodeEnter.append("svg:image")
+.attr("xlink:href",  function(d) { return d.img;})
+.attr("x", function(d) { return -25;})
+.attr("y", function(d) { return -25;})
+.attr("height", 50)
+.attr("width", 50);
+        </pre>
+
+        <br>
+        参考：<a href="http://bl.ocks.org/eesur/be2abfb3155a38be4de4">http://bl.ocks.org/eesur/be2abfb3155a38be4de4</a>
+        
+        <br>
+        <br>
+        <br>
+        <hr>
+        
+    </p>
+
+
+
+    <p>
+
+        <h2>
+            force layout 元々のソースコード
+        </h2>
+        <br>
+        こちらの記事を参考にコードを書いていました<br>
+        <br>
+        <a href="https://qiita.com/hirodos/items/47d53ab606390af97533">https://qiita.com/hirodos/items/47d53ab606390af97533</a>
+        <br>この記事を少し改良した元々のコード<br>
+        <br>
+        <pre>
+node.append("svg:image")
+    .attr('xlink:href', function(d) {if (typeof d.image === "undefined") {return  "https://applimura.com/wp-content/uploads/2019/08/twittericon13.jpg" } else { return d.image }})
+    .attr('x',-22)
+    .attr('y',-22)
+    .attr('width',45)
+    .attr('height',45);
+        </pre>
+
+
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+    <p>
+
+        <h2>
+            force layout 変更後のコード
+        </h2>
+        <br>
+        <pre>
+node.append("svg:image")
+    .attr('xlink:href', function(d) {if (typeof d.image === "undefined") {return  "https://applimura.com/wp-content/uploads/2019/08/twittericon13.jpg" } else { return d.image }})
+    .attr('x',function(d) { return -22;})
+    .attr('y',function(d) { return -22;})
+    .attr('width',45)
+    .attr('height',45);
+        </pre>
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+
+    <p>
+
+        <h2>
+            いかにして修正方法を発見するのか？
+        </h2>
+        1,iphoneやipadのみforce layoutの画像が表示されないことに気づく<br>
+        2,一方でしっかりとイメージが表示されているサイトもあることに気づく<br>
+        3,force layoutのsソースコードをよく見る(特に、問題となる画像部分)<br>
+        4,不審な関数に気づく<br>
+        <br>
+        不審な関数とは、冒頭のあげた以下のコード<br>
+        <pre>
+.attr("x", function(d) { return -25;})
+.attr("y", function(d) { return -25;})
+        </pre>
+        どんな引数dが入るにせよ、返す値は必ず-25です<br>
+        それはつまり、-25を直接記述するコードを書くのと同じです<br>
+        しかしそれしか違いがないのでためらわず改変<br>
+        するとあら不思議<br>
+        
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+
+    <p>
+
+        <h2>
+
+        </h2>
+
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+
+    <p>
+
+        <h2>
+
+        </h2>
+
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+
+    <p>
+
+        <h2>
+
+        </h2>
+
+
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </p>
+
+
+
+
+
+
+    
+
+
+
+
+
+</p>
+
+
+    
+</div>
+    
+{% endblock %}

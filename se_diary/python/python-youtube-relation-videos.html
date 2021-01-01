@@ -1,0 +1,179 @@
+
+
+<head>
+    <title>{{ title }}</title>
+
+    <meta name="keywords" content="youtube,python,関連動画">
+    {% block meta %}
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--①-->
+    <meta name="twitter:site" content="@matuki_no_ukiwa" />
+    <!--②-->
+    <meta property="og:url" content="http://www.minekawada.com/wikipedia-python.html" />
+    <!--③-->
+    <meta property="og:title" content="{{ title }}" />
+    <!--④-->
+    <meta property="og:description" content="pythonでwikipediaにアクセスして、全知全能になりたい" />
+    <!--⑤-->
+    <meta property="og:image" content="http://www.minekawada.com/static/Real/wiki/wikipedia_api_link.png" />
+    {% endblock %}
+
+</head>
+
+
+
+<div>
+
+
+
+    <section>
+        コード
+
+        <pre>
+            <code>
+from bs4 import BeautifulSoup
+from urllib.request import urlopen, quote
+import requests
+
+
+
+
+def load_movie_list(word):
+    url = "https://www.youtube.com/results?search_query={}".format(quote(word))
+
+    html = urlopen(url)
+    bsOjb = BeautifulSoup(html, features="html.parser")
+    li_bsObjs = bsOjb.findAll("li")
+
+    relation_videos = []
+    for li_tag in li_bsObjs:
+        img_tag = li_tag.find("img")
+        if img_tag is None:
+            continue
+        
+        try:
+            img = img_tag["data-thumb"]
+        except KeyError:
+            continue
+
+        href = li_tag.find("a")["href"]
+
+        if "UC" in href:
+            continue
+
+        try:
+            print(li_tag)
+            title = li_tag.findAll("a")[1].text
+        except IndexError:
+            continue
+
+        relation_videos.append({
+            "title" : title,
+            "href" : href.replace("/watch?v=","").replace("/channel/", ""),
+            "img" : img
+        })
+
+    return relation_videos
+
+
+
+
+            </code>
+        </pre>
+    </section>
+
+    <section>
+
+        <h2>youtubeへアクセスする</h2>
+        <br>
+        コードは以下の部分<br>
+        <pre>
+            <code>
+    url = "https://www.youtube.com/watch?v=" + video_id
+
+    html = urlopen(url)
+    bsOjb = BeautifulSoup(html, features="html.parser")
+            </code>
+        </pre>
+        youtubeのurlへアクセスしhtmlを手に入れた後、BeautifulSoupというパーサーライブラリーへhtmlを渡す<br>
+    </section>
+
+    <section>
+        <h2>li要素を全て取得する</h2>
+        <br>
+        コード
+        <pre>
+            <code>
+li_bsObjs = bsOjb.findAll("li")
+            </code>
+        </pre>
+        htmlを勉強したことのある人ならわかりますが,<br>
+        「li」というタグは、リストを書くために使用します<br>
+        youtubeも動画のリストをhtmlで表現するためにliを使っています<br>
+        したがって、動画のリストを手に入れたい時は、li要素を全て取得すればいいです<br>
+
+    </section>
+
+    <section>
+        <h2>li内のimgを取得する</h2>
+        <pre>
+            <code>
+        img_tag = li_tag.find("img")
+        if img_tag is None:
+            continue
+        
+        try:
+            img = img_tag["data-thumb"]
+        except KeyError:
+            continue
+
+            </code>
+        </pre>
+        img要素のdata-thumb属性値を手に入れます<br>
+        <br>
+        ちなみにこのdata-thumbのthumbはthumbnailのthumb<br>
+        thumbnailはサムネイルのことですね<br>
+        つまりdata-thumbはサムネイルデータのこと<br>
+    </section>
+
+
+    <section>
+        <h2>同時に、li内にあるaタグ内からタイトルとurlを手に入れる</h2>
+
+        <pre>
+            <code>
+        href = li_tag.find("a")["href"]
+
+        if "UC" in href:
+            continue
+
+        try:
+            print(li_tag)
+            title = li_tag.findAll("a")[1].text
+        except IndexError:
+            continue
+            </code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>手に入れた情報をまとめる</h2>
+        <pre>
+            <code>
+                relation_videos.append({
+                    "title" : title,
+                    "href" : href.replace("/watch?v=","").replace("/channel/", ""),
+                    "img" : img
+                })
+            </code>
+        </pre>
+        ここで、今まで手に入れたタイトル、url、画像のデータをまとめます。
+    </section>
+
+    <section>
+        ここまでのその３〜５をli要素の数だけfor文によって繰り返します<br>
+
+    </section>
+</div>
+
+

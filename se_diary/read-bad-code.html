@@ -1,0 +1,228 @@
+
+        <head>
+            <title>{{ title }}</title>
+            
+                    
+          <meta name="keywords" content="python,useful,function,hack">
+          {% block meta %}
+            <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+            <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+            <meta property="og:url" content="http://www.minekawada.com/python-useful-lib.html" /> <!--③-->
+            <meta property="og:title" content="{{ title }}" /> <!--④-->
+            <meta property="og:description" content="今でこそ豊富なライブラリーで有名ですが、元々の言語のパワーは凄まじいです" /> <!--⑤-->
+            <meta property="og:image" content="{{ core_image_url }}" />
+            {% endblock %}
+
+          </head>
+          
+
+          
+  
+        <div id="content">
+
+            <h2>{{ title }}</h2>
+          <br>
+          <br>
+
+          <h4>目次</h4>
+          <ol>
+              <li><a href="#first">はじめに</a></li><br>
+
+            <li><a href="#pprint">pprint</a></li>
+            <br>
+            <li><a href="#print">print</a></li>
+            <br>
+            <li><a href="#str">__str__</a></li>
+
+
+          </ol>
+
+          <br>
+          <br>
+          <hr>
+
+
+          <p id="first">
+
+        pythonには「電池つき言語」という名誉な称号(?)が付いています<br>
+        電池つきというのは、「ユーザーがよく使うようなものは全て元から付いている」<br>
+        という意味です。<br>
+        ユーザーにとってちょっとした機能はわざわざインストールする必要がなく、もうすでに備わっているものです<br>
+        しかもそのインストールですら,「pip install インストール対象」の１コマンドで終わってしまうのですから<br>
+        複雑なライブラリーや、変わった開発環境でない限り、インストールには手間どらないような仕組みになっていますね<br>
+
+        <br>
+        <br>
+        今回はそんなpythonの「電池付き」の部分。<br>
+        「pip install 」の範囲外<br>
+        何もインストールしていない状態での元々の機能について触れていきたいと思います<br>
+        今でこそ豊富なライブラリーで有名ですが、元々の言語のパワーは凄まじいです<br>
+        そのパワーを生かさないのは勿体無い！<br>
+
+
+        <br>
+        <br>
+        <hr>
+        <p id="pprint">
+
+            <h2>pprint関数</h2>
+            皆さんは配列をprintしたことはありますか?
+            <br>
+            配列をプリントすると画面が真っ黒になりますよね笑<br>
+            サンプルコード
+            <pre>
+                <code>
+some_list = []
+
+for i in range(0,100):
+    some_list.append(list(range(0,10)))
+
+print(some_list)
+                </code>
+            </pre>
+            これを実行すると、以下のようなテキストで出力されるはずです
+
+
+
+        <img src="{% static '/Real/python_code/bad_pprint.png' %}">
+        これは見づらいですよね...<br>
+        それを綺麗に直してくれるのがpprint関数なんです<br>
+
+        <pre>
+            <code>
+from pprint import pprint
+some_list = []
+
+for i in range(0,100):
+    some_list.append(list(range(0,10)))
+
+pprint(some_list)
+            </code>
+        </pre>
+これを実行すると以下のようなコードが生成されます<br>
+<img src="{% static '/Real/python_code/good_pprint.png' %}">
+
+どうでしょう！綺麗に整えられて出力されていますね！<br>
+今回は配列を綺麗に出力してくれましたが、<br>
+<h3>実は配列だけでなく、辞書も綺麗に出力してくれます！</h3>
+汚いコンソール出力に悩まされているpythonistaの皆さん！ぜひ使ってみてください!<br>
+        </p>
+<br>
+
+<br>
+<br>
+<hr>
+<p id="print">
+    <h2>print</h2>
+    おそらくpython使いが初めて使うであろうprint<br>
+    そのprintでも実は様々な仕掛けがあるのです！<br>
+    とりあえずはドキュメントを確認してみましょう<br>
+<br>
+    <img src="{% static '/Real/python_code/print_doc.png' %}">
+<br>
+    注目して欲しいのは2点<br>
+    まずは1点目<br>
+    <br>
+    objects を sep で区切りながらテキストストリーム file に表示し
+    <br>
+    この部分！<br>
+    <h3>print関数の引数sepに文字列を渡すと、その文字列で区切られる形でコンソールに出力されます！</h3>
+    これを活かしたコードをかくと以下のようになります<br>
+    <pre>
+        <code>
+a = "富岡義勇"
+b = "18year"
+c = "しゃけ大根好き"
+
+print(a,b,c)
+print(a,b,c,sep=" : ")
+        </code>
+    </pre>
+    出力結果
+    <pre>
+        <code>
+富岡義勇 18year しゃけ大根好き
+富岡義勇 : 18year : しゃけ大根好き
+        </code>
+    </pre>
+
+    出力の区切りはデフォルトではスペースになってますが、それをセミコロンに変更可能なのです！<br>
+    １行目よりも、２行目の方が区切りが良くて見栄えがいいですね！<br>
+
+    <br>
+    <br>
+    さらにもう一点<br>
+    <img src="{% static '/Real/python_code/print_doc.png' %}">
+    <br>
+    注目すべきは以下の一文
+    <br>
+    最後に end を表示します
+    <br>
+    デフォルトではend='\n'となっているからこそ、改行された状態で出力されるのですね<br>
+    しかし逆に改行せずに出力したい時もあると思います<br>
+    <h3>改行せずに出力したいときはend=''を引数に入れましょう！</h3>
+</p>
+
+
+<br>
+<br>
+<br>
+<hr>
+
+<p>
+
+<h2 id="str">__str__</h2>
+
+<br>
+<br>
+さて、皆さんは今クラス名簿作成プロジェクトに携っているとします<br>
+
+
+あなたの上司からStudentクラスを作り、そのクラスで名前(name)と学籍番号(number)を管理するように
+と言われました<br>
+
+
+そしてそのクラスからは、学籍番号と名前を出力したいと考えています<br>
+さて、どのようなメソッドを作成しますか?<br>
+<br>
+<br>
+そんなときは__str__メソッドを使いましょう！<br>
+
+<h3>__str__メソッドは、そのクラスを代表する文字列を返すためのメソッドです</h3>
+<h3>オブジェクトをprintやstrに入れた時の表示をreturnで指定できます！</h3>
+
+<br>
+<br>
+例えば、以下のようなクラスがあったとします
+<br>
+<pre>
+
+    <code>
+class Student():
+    def __init__(self, name, number):
+        self.name = name
+        self.number = number
+    
+    def __str__(self):
+        return "< name : " + self.name + " , number : " + str(self.number) + " >"
+    </code>
+</pre>
+
+ここで<br>
+student = Student("里崎",234)<br>
+というオブジェクトを作成し<br>
+str(student)やprint(student)といったコードを実行すると<br>
+"< name : " + self.name + " , number : " + str(self.number) + " >"の形式に当てはまるように<br>
+つまり<br>
+<img src="{% static '/Real/python_code/satozaki.png' %}">
+<br>
+このように、自分が指定した形でクラスを表示できるのです！<br>
+
+
+
+</p>
+
+        </div>
+
+
+  

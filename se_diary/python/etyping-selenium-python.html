@@ -1,0 +1,185 @@
+
+
+        <head>
+            <title>{{ title }}</title>
+            {% block meta %}
+                    
+          <meta name="keywords" content="python,寿司打,selenium">
+  
+            <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+            <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+            <meta property="og:url" content="http://www.minekawada.com/WhatIsUnko.html" /> <!--③-->
+            <meta property="og:title" content="etypingをseleniumとpythonで自動化する" /> <!--④-->
+            <meta property="og:description" content="キーボードを叩く。えぐりこむように打つべし打つべし" /> <!--⑤-->
+            <meta property="og:image" content="http://www.minekawada.com/static/Real/python_18894.png" />
+            {% endblock %}
+  
+            <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  
+          </head>
+
+  
+        <div id="content">
+          <br>
+          <br>
+          <h4>目次</h4>
+          <ol>
+            <li><a href="#pre">前回までのあらすじ</a></li>
+            <br>
+            <li><a href="#code">コード</a></li>
+            <br>
+            <li><a href="#code_analysis">コードの解説</a></li>
+            <br>
+            <li><a href="#result">結果</a></li>
+
+          </ol>
+
+
+          <p id="pre">
+            前回までのあらすじ<br>
+           <h2> 
+             <a href="./SushidaAuto.html">寿司打を自動化する(python, selenium)</a>
+           </h2>
+           では、寿司打をpythonとseleniumで自動化しました。<br>
+            <br>
+
+            <iframe width="100%" height="300" src="https://www.youtube.com/embed/kEuQ7LY_Nq0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br>
+            寿司打のseleniumでの自動化はかなり手強かったですが、その分充実感がありました<br>
+            <br>
+            スクレイピングやseleniumでの自動化はなんだか山に登っている気分ですね<br>
+            複雑なサイトや、セキュリティチェックが厳しければ厳しいほど燃えるというか<br>
+            <br>
+            そんな風に一つの山を越えると、他の山も越えたくなるのがスクレイパーの魂ですね<br>
+            寿司打という富士山を越した今、他の山で今の自分の実力を計りたい！<br>
+
+            そんなスクレイパーな私が次の山として選んだのが次のサイトです<br>
+
+            <br>
+
+
+            
+            <a href="https://www.e-typing.ne.jp/roma/check/">https://www.e-typing.ne.jp/roma/check/</a>
+            <br>
+            <br>
+
+
+
+            このサイトも同じく、タイピングの練習用のサイトです<br>
+            名前はetyping<br>
+            シンプルでわかりやすい名前のサイトですね<br>
+            少なくとも寿司打よりはわかりやすい<br>
+            <br>
+            <br>
+
+            <hr>
+            <h3 id="code">自動化処理を行うソースコード</h3>
+
+
+ソースコードは以下の通りです。<br>
+            <pre><code>
+
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+url='https://www.e-typing.ne.jp/roma/check/'
+driver = webdriver.Chrome("/Users/fenganling/Downloads/chromedriver")
+driver.get(url)
+
+# 今すぐチェック！をクリック
+driver.find_element_by_class_name('edro').click()
+
+time.sleep(1)
+
+# モーダルにスイッチ
+driver.switch_to_frame('typing_content')
+
+
+_ = input("input enter")
+
+try:
+    while True:
+        driver.find_element_by_tag_name("body").send_keys("abcdefghijklnmopqrstuvwxyz-")
+except:
+    import traceback
+    traceback.print_exc()
+    driver.close()
+            </code></pre>
+
+            <br>
+            <br>
+  繰り返しになりますが、「/Users/fenganling/Downloads/chromedriver」
+  はご自身のCHromeDriverをインストールした先のパスを指定してください<br>
+<br>
+
+<hr>
+  <h2 id="code_analysis">selenium、pythonコードの解説</h2>
+  まずはいつも通り<br>
+  driver.get(url)<br>
+  で指定したページに移動します<br>
+  <br>
+  <br>
+  <br>
+
+  次にこの部分
+  <pre>
+    <code>
+      # 今すぐチェック！をクリック
+driver.find_element_by_class_name('edro').click()</code>
+  </pre>
+  ここではedroという特殊な名前が出てきますが、これはこのサイトのhtmlで使っている特殊なclass名です。
+  <br>
+  この部分ではclass名がedroな要素をclickしろという命令を実行しています。<br>
+
+
+  <br>
+  <br>
+  次にここの部分<br>
+
+  <pre><code>
+    # モーダルにスイッチ
+driver.switch_to_frame('typing_content')
+  </code></pre>
+  ここの部分では「モーダルウィンドウ」にスイッチしています。<br>
+  「モーダルウィンドウ」とは、簡単に言えばurlが変わらずになんらかのアクションで「にゅっと」出てくるウィンドウのことです<br>
+  ここでスイッチしておかないと、入力ができません<br>
+
+<br>
+<br>
+<br>
+最後は以下の部分
+<pre>
+  <code>
+    driver.find_element_by_tag_name("body").send_keys("abcdefghijklnmopqrstuvwxyz-")
+  </code>
+</pre>
+これはhtml内のbody要素に対して、aからzまでと-を全て入力するコードになっています。<br>
+
+
+
+さて、結果は...？
+
+
+
+<br>
+<br>
+
+<hr>
+<h3 id="result">etyping自動化の結果</h3>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/uwL_WqVlvaI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+<br>
+
+おやおや、あまり上手くいっていないようですね<br>
+
+キーボードを叩く、と言う点については文句なしです<br>
+キーボードがしっかりと反応し、abcd順に打てているのも確認できます<br>
+ただこの手のサイトはあまりにも間違えすぎると逆に0点になってしまうようです<br>
+<br>
+<br>
+
+        </div>
+
+

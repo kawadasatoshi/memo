@@ -1,0 +1,111 @@
+
+
+
+<head>
+<title>将棋GUIアプリ「将棋所」とpythonを結びつける(mac)</title>
+    <meta name="keywords" content="Python,将棋所,mac">
+    {% block meta %}
+    <meta name="twitter:card" content="summary_large_image" /> <!--①-->
+    <meta name="twitter:site" content="@matuki_no_ukiwa" /> <!--②-->
+    <meta property="og:url" content="http://www.minekawada.com/python-middle-level.html" /> <!--③-->
+    <meta property="og:title" content="将棋GUIアプリ「将棋所」とpythonを結びつける(mac)" /> <!--④-->
+    <meta property="og:description" content="そこで今回は「将棋所」というGUIアプリとpythonを繋げてCUIを卒業しましょう" /> <!--⑤-->
+    <meta property="og:image" content="http://www.minekawada.com/static/Real/python_18894.png" /> <!--⑥-->
+    {% endblock %}
+</head>
+
+
+
+      <div id="content">
+        <h1>
+          将棋GUIアプリ「将棋所」とpythonを結びつける in mac
+        </h1>
+
+        <img src="{% static 'program/page6/スクリーンショット 2020-01-10 21.44.14.png'%}"width="100%">
+            
+
+        <p>
+          CUIだけで動くアプリってあんまりまともなやつないですよね<br>
+          確かに白黒の文字列だけのコンソールをカタカタ動かせたらハッカーっぽくて（クラッカーっぽくて）<br>
+          かっかいいですが一般の人からするとなんのこっちゃわからなくて恐怖の対象だと思うのです。<br>
+          <img src="{% static 'program/page6/スクリーンショット 2020-01-09 21.40.16.png'%}"width="100%">
+          <br>（僕はコンソールが怖いのでフクロウのAAを.bashrcに貼り付けてます)<br>
+        
+          <br>
+          <a href="/python-shogi-setup.html">前回</a>までで将棋をpythonの上から動かすことはできて、CUIとしてコンソールからでも動かせますが、このままでは対戦ができません。<br>
+
+          せっかく作ったのにいちいち文字列を入力しながら対戦したくない<br>
+
+          そこで今回は「将棋所」というGUIアプリとpythonを繋げてCUIを卒業しましょう<br>
+
+          <br>では、やっていきましょうか<br>
+          <h1>将棋所のセットアップ</h1>
+
+          <br>まずは、将棋所の本体をインストールしましょう<br>
+          <a href="http://shogidokoro.starfree.jp/download.html">将棋所のページ</a>
+          <br>
+          上のページの「ダウンロード」から、インストールしましょう！
+
+          <h2>注意！</h2>
+          将棋所は.exeファイルです<br>
+          つまる所、windows上でしか動きません<br>
+          なのでmacユーザーの人は<br>
+          <ol>
+              <li>virtual boxをインストールする</li>
+              <li>ubuntuをインストールする</li>
+              <li>ubuntuを立ち上げる</li>
+              <li><a href="https://text.baldanders.info/remark/2019/04/mono-in-ubuntu/">こちら</a>からmonoというwindowsアプリを他osで動かすアプリを入れる</li>
+              <li>(書くの疲れた。やっぱwindows買ってくれ)</li>
+              <li><a href="http://shogidokoro.starfree.jp/download.html">将棋所のページ</a>からダウンロード</li>
+              <li>ダウンロードフォルダに行き<br>unzip Shogidokoro</li>
+              <li>[mono Shogidokoro.exe]を実行</li>
+
+              
+            </ol>
+
+
+            <img src="{% static 'program/page6/スクリーンショット 2020-01-10 12.54.13.png'%}"width="100%">
+            <br>p2pから<br>
+            <img src="{% static 'program/page6/スクリーンショット 2020-01-10 13.13.21.png'%}"width="100%">
+            
+            <br>OKを押して<br>
+            <img src="{% static 'program/page6/スクリーンショット 2020-01-10 13.13.33.png'%}"width="100%">
+            <br>ここでのIPアドレスを覚えておきましょう！<br>
+            <br>
+            という感じで将棋所を準備。
+
+        
+            <br>インストールできた人はここまで操作しておきましょう。<br>
+
+        <br>ここからは、pythonを動かすための準備です<br>
+        <h1>Pythonで将棋所を動かすセットアップ</h1>
+
+
+          <br>まずは次のコマンド<br>
+          git clone https://github.com/gunyarakun/python-shogi.git
+          <br>を実行してshogiというpythonらイブラリーをインストールしましょう<br>
+
+          そして次の２つのコードを同じ階層に置いておく<br>
+
+          <script src="https://gist.github.com/MineOwl/37a498b6e32ba8f0b254aa72db67c260.js"></script>
+          <br>少し解説すると<br>
+          board.legal_moves<br>
+          は将棋のルール上動かすことが可能な全てのMoveオブジェクトのIteroterです<br>
+          その中からrandom.choiceでランダムに手を選んで動かします<br>
+          <br>
+          <br>
+          次は通信を担うコードです。
+          <script src="https://gist.github.com/MineOwl/55f8265301f47e246f5aa73d08b3b3c8.js"></script>
+
+          Battle.pyの9行目<br>
+          [specific ip adress]はさっきメモしたipアドレスにしてください！<br>
+          pythonと将棋所の通信に使います！<br>
+
+          <br>いざ実行<br>
+          python Battle.py<br>
+
+          <img src="{% static 'program/page6/スクリーンショット 2020-01-10 21.44.14.png'%}"width="100%">
+            
+
+          </p>
+          </div>
