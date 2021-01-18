@@ -1,0 +1,103 @@
+
+<head>
+    <title>
+Githubの全てのページをpythonで自動取得する！　現役エンジニアの独り言
+    </title>
+
+    <meta name="description" content="
+自分はgithubをページサーバーあるいはデータサーバーとして利用しております。
+ウェブサイトのバックエンドはdjango(python)で書かれている都合上、Githubのページ一覧を取得しなければならなくなったので、ここに紹介。
+    ">
+    <meta name="keywords" content="
+
+    ,
+
+    ,
+
+    ">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--①-->
+    <meta name="twitter:site" content="@matuki_no_ukiwa" />
+    <!--②-->
+    <meta property="og:url" content="" />
+    <!--③-->
+    <meta property="og:title" content="パスワードの設定術" />
+    <!--④-->
+    <meta property="og:description" content="デスクワーク系の仕事なら全員パソコンのパスワードはあえてうちずらいパスワードに設定するのがいいと思う。" />
+    <!--⑤-->
+    <meta property="og:image"
+        content="https://support.apple.com/library/content/dam/edam/applecare/images/ja_JP/osx/macbookpro-change-reset-password-login-hero.jpg" />
+
+
+
+    <script data-ad-client="ca-pub-6548366793980519" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158902034-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-158902034-1');
+    </script>
+</head>
+
+<article>
+    <header class="post-info">
+        <h1 class="post-title">
+            Githubの全てのページをpythonで自動取得する！　現役エンジニアの独り言
+        </h1>
+        <p class="post-date">
+            1/18
+            <span>
+                2021
+            </span>
+        </p>
+        <p class="post-cat">
+
+        </p>
+    </header>
+
+<p>
+
+自分はgithubをページサーバーあるいはデータサーバーとして利用しております。
+ウェブサイトのバックエンドはdjango(python)で書かれている都合上、Githubのページ一覧を取得しなければならなくなったので、ここに紹介。
+    
+</p>
+
+
+
+</article>
+
+<pre>
+class MemoTreeGenerator():
+def __init__(self):
+
+    g = Github( ??? )
+    self.repo = g.get_user().get_repo( ??? )
+    self.log_tree = {}
+    self.get_path(path="", tree = self.log_tree)
+
+def get_path(self, path="", tree = {}):
+    #ファイルが一つしかないとき                
+    obj = self.repo.get_dir_contents(path=path)
+
+    if type(obj) != type(list()):
+        #ファイル
+        return
+        
+    else:
+        #フォルダー
+
+        for d in obj:
+            tree.update({
+                d.name : {}
+            })
+
+        for d in obj:
+            print(d)
+            next_path = os.path.join( path , d.name)
+            self.get_path(next_path, tree[d.name])
+</pre>
