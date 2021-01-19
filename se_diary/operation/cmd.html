@@ -133,10 +133,35 @@
 </p>
 
 
+<p>
+    systemctlはサービスをコントロールするコマンドです。
+</p>
+<pre>
+    操作	コマンド
+    サービス起動	systemctl start ${Unit}
+    サービス停止	systemctl stop ${Unit}
+    サービス再起動	systemctl restart ${Unit}
+    サービスリロード	systemctl reload ${Unit}
+    サービスステータス表示	systemctl status ${Unit}
+    サービス自動起動有効	systemctl enable ${Unit}
+    サービス自動起動無効	systemctl disable ${Unit}
+    サービス自動起動設定確認	systemctl is-enabled ${Unit}
+    サービス一覧	systemctl list-unit-files --type=service
+    設定ファイルの再読込	systemctl daemon-reload
+</pre>
 
 
+<p>
+    例えばmysqlデータサーバーを立てる時は
+</p>
 
+<p>
+    mysql start mysqld
+</p>
 
+<p>
+    というようにしてサーバーを起動して、ようやくアクセスできるようになるわけです。
+</p>
 
 </article>
 
